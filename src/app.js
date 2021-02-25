@@ -20,6 +20,7 @@ const options = {
 }
 
 var pg = require('pg');
+var yourGlobalVariable;
 
 const client = new tmi.Client(options)
 
@@ -83,20 +84,63 @@ client.on('message', (channel, userstate, message, self) => {
   }
 
 	if(message.toLowerCase() === '!hello') {
-    hello(channel, userstate)
-    return
+    hello(channel, userstate);
+    return;
   }
 
-
   if(message.toLowerCase()==='!play'){
-    play(channel,userstate)
-    return
+    play(channel,userstate);
+    return;
   }
 
   if(message.toLowerCase()==='!adopt'){
-    adopt(channel,userstate)
-    return
+    adopt(channel,userstate);
+    return;
   }
+
+  if(message.toLowerCase()==='!disown'){
+    disOwnRock(channel,userstate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!coinflip'){
+    cointflip(channel,usertate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!bankAmount'){
+    bankAmount(userstate);
+    return;
+  }
+
+
+  if(message.toLowerCase()==='!wagerSetup'){
+    wagerSetup(channel,userstate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!bet1'){
+    bet1(channel,userstate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!bet2'){
+    bet2(channel,userstate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!payout1'){
+    payout1(channel,userstate);
+    return;
+  }
+
+  if(message.toLowerCase()==='!payout2'){
+    payout2(channel,userstate);
+    return;
+  }
+
+
+
 
 
   onMessageHandler(channel, userstate, message, self)
@@ -185,25 +229,147 @@ function play(channel,userstate){
   client.say(channel, `@${userstate.username}, What game do you want to play?`)
 }
 
-
 function adopt(channel,userstate){
   client.say(channel, `@${userstate.username}, Do you wnat to adopt a pet rock?`)
 }
 
-
-
-function adoptRock(){
+function adoptRock(userstate){
   //Figure Out What these values are other than username
   var query = "Insert from RockOwners values('" +userstate.username+"',0,0,0);"
   connectToDB(query);
 
 }
 
-function disOwnRock(){
+function disOwnRock(userstate){
   var query = "Delete from RockOwners where Owners = " +  userstate.username;
   connectToDB(query);
 
 }
+
+function coinFlip(userstate,wager){
+  var query = "Select Money from Bank where Owners = " + userstate;
+  var value=0;
+
+  if (value<wager){
+    client.say(channel, `@${userstate.username}, You don't have enough points to make that wager`)
+  }
+
+  else{
+      var number = Math.round(Math.random())
+
+      if (number<0.5){
+        client.say(channel,`@${userstate.username}, You lost the points you bet`);
+        var newValue = value-wager;
+        var query = "UPDATE courses SET Money = '" + userstate.username +"'" + " WHERE Money = " + newValue + ";";
+        connectToDB(query);
+      }
+
+      else{
+        client.say(channel,`@${userstate.username}, You won the points you bet`);
+        var newValue = value+wager;
+        var query = "UPDATE courses SET Money = '" + userstate.username +"'" + " WHERE Money = " + newValue + ";";
+        connectToDB(query)
+      }
+  }
+}
+
+function bankAmount(userstate){
+  var query = "Select Money from Bank where Owners = " + userstate;
+  connectToDB(query);
+  value = 0;
+  client.say(channel,`@${userstate.username}, has `+ value)
+}
+
+function wagerSetup(channel,userstate){
+  var query = "DELETE FROM Wager;";
+  var fields = input.split(username.message);
+  
+}
+
+function bet1(channel,userstate){
+  var query = "take points from bank";
+  var query2 = "put points into wager bank";
+
+}
+
+function bet2(channel,userstate){
+  var query = "take points from bank";
+  var query2 = "take points from wager bank"
+
+}
+
+function payout1(channel,userstate){
+    var allWinners = "Select Users where Bet = 1";
+    var winners = connectToDB(allWinners);
+    var i;
+    var a = "Select all(first) from Wager;"
+    var b = "Select all(second) from Wager;"
+    var odds = a/(a+b);
+    for(i;i<winners.lenght();i++)
+    {
+      var query = "Update Bank Set Money = "+ wager/odds +" from Bank where Person = " + winner+";";
+      connectToDB(query);
+    }
+    
+}
+
+function paytout2(channel,userstate){
+  var allWinners = "Select Users where Bet = 2";
+  var winners = connectToDB(allWinners);  
+  var i;
+
+  var a = "Select all(second) from Wager;";
+  var b = "Select all(first) from Wager;";
+  var odds = a/(a+b);
+
+  for(i;i<winners.length();i++){
+    var winner = winners[i];
+    var wager = wagers[i];
+    var query = "Update Bank Set Money = "+  wager/odds  +" from Bank where Person = "+ winner+";";
+    connectToDB(query);
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+//Add Catagories here if you want to expand catagories
+function redeemCatagories(channel,userstate){
+  var catagories = new Array();
+  catagories[0] = "Do a voice?";
+  catagories[1] = "Request Game?" 
+  catagories[2] = "Song Request?"
+  return catagories;
+}
+
+
+function whatAreRedeems(channel,userstate){
+  var catagores = redeemCatagories(channel,userstate)
+  var i;
+  var output;
+  for (i = 0; i < catagores.length; i++) {
+       output +=  String(i+1) + catagories + " "
+  } 
+    client.say(channel,output)
+}
+
+
+setInterval(function() {
+  var query = 'Update Bank Set Money = Money + 5';
+  connectToDB(query)
+}, 300 * 1000);
+
+
+
+
 
 
 function connectToDB(query){
