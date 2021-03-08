@@ -22,10 +22,10 @@ const options = {
 
 const {Pool} = require('pg')
 const pool = new Pool({
-  user:"rokruss",
+  user:"",
   host:"localhost",
   database:"twitchdatabase",
-  password:"T0r0nt0123",
+  password:"",
   port:5432
 })
 
