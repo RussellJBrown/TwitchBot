@@ -8,14 +8,14 @@ use of the bot.
 
 Bot Commands
 
-!join: Allows the user to join the database and start earning points.
-!clear: Clears wagers and betNumbers.
-!coinflip: Allows the user to perform the a coinflip for an X amount of points.
-!bankamount: Returns how many points the user has.
-!open: the prediction question: This allows people to make wagers.
-!close: stops people from being able to makes wagers.
-!bet1: pays out people who bet Option 1.
-!bet2: pays out people who bet Option 2.
-!wager1 x: places a bet on option 1 for x amount.
-!wager2 x: places a bet on option 2 for x amount.
-!current: returns the current prediction.
+**!join:** Allows the user to join the database and start earning points.\
+**!clear**: Clears wagers and betNumbers.\
+**!coinflip:** Allows the user to perform the a coinflip for an X amount of points.\
+**!bankamount:** Returns how many points the user has.\
+**!open:** the prediction question: This allows people to make wagers.\
+**!close:** stops people from being able to makes wagers.\
+**!bet1:** pays out people who bet Option 1.\
+**!bet2:** pays out people who bet Option 2.\
+**!wager1 x:** places a bet on option 1 for x amount.\
+**!wager2 x:** places a bet on option 2 for x amount.\
+**!current:** returns the current prediction.\
