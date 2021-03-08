@@ -18,4 +18,4 @@ Bot Commands
 **!bet2:** pays out people who bet Option 2.\
 **!wager1 x:** places a bet on option 1 for x amount.\
 **!wager2 x:** places a bet on option 2 for x amount.\
-**!current:** returns the current prediction.\
+**!current:** returns the current prediction.
