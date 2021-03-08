@@ -1,4 +1,4 @@
-# Twitch Bot
+# Twitch Gambling Bot
 
 This is a twitch bot that replocates and adds a few extra features from the twitch wager feature.
 This bot allows non-partner and non-affliate streamers have the option of using a gambling for their audience. 
